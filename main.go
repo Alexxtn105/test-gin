@@ -27,7 +27,7 @@ func main() {
 	models.ConnectDatabase()
 	models.DBMigrate()
 
-	//инициализируем сессии
+	//инициализируем хранилище сессии
 	store := memstore.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("notes", store))
 
