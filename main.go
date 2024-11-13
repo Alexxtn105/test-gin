@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"test-gin/controllers"
+	"test-gin/controllers/helpers"
 )
 
 func main() {
@@ -22,21 +24,33 @@ func main() {
 
 	notes := r.Group("/notes")
 	{
-		notes.GET("/", controllers.NotImplemented)
-		//notes.GET("/new", controllers.NotImplemented)
-		//notes.POST("/", controllers.NotImplemented)
-		//notes.GET("/:id", controllers.NotImplemented)
-		//notes.GET("edit/:id", controllers.NotImplemented)
-		//notes.POST("/:id", controllers.NotImplemented)
-		//notes.DELETE("/:id", controllers.NotImplemented)
+		notes.GET("/", controllers.NotesIndex)
+		notes.GET("/new", controllers.NotesNew)
+		notes.POST("/", controllers.NotesCreate)
+		notes.GET("/:id", controllers.NotesShow)
+		notes.GET("edit/:id", controllers.NotesEditPage)
+		notes.POST("/:id", controllers.NotesUpdate)
+		notes.DELETE("/:id", controllers.NotesDelete)
 	}
 
-	r.GET("/login", controllers.NotImplemented)
-	r.GET("/signup", controllers.NotImplemented)
+	r.GET("/login", controllers.LoginPage)
+	r.GET("/signup", controllers.SignupPage)
 
-	r.POST("/signup", controllers.NotImplemented)
-	r.POST("/login", controllers.NotImplemented)
-	r.POST("/logout", controllers.NotImplemented)
+	r.POST("/signup", controllers.Signup)
+	r.POST("/login", controllers.Login)
+	r.POST("/logout", controllers.Logout)
+
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(
+			http.StatusOK,
+			"home/index.html",
+			//TODO - add helper!
+			helpers.SetPayload(c, gin.H{
+				"title":     "Notes Application",
+				"logged in": helpers.IsUserLoggedIn(c),
+			}),
+		)
+	})
 
 	addr := ":8089"
 	log.Println("Server started on " + addr)
