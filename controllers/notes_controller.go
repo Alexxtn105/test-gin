@@ -73,7 +73,7 @@ func NotesEditPage(c *gin.Context) {
 }
 
 func NotesUpdate(c *gin.Context) {
-	//TODO NotesDelete
+	//TODO
 	currentUser := helpers.GetUserFromRequest(c)
 	if currentUser == nil || currentUser.ID == 0 {
 		c.HTML(
@@ -97,7 +97,6 @@ func NotesUpdate(c *gin.Context) {
 }
 
 func NotesDelete(c *gin.Context) {
-	//TODO NotesDelete
 	currentUser := helpers.GetUserFromRequest(c)
 	if currentUser == nil || currentUser.ID == 0 {
 		c.HTML(
