@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"test-gin/controllers"
 	"test-gin/controllers/helpers"
+	"test-gin/models"
 )
 
 func main() {
@@ -19,8 +20,8 @@ func main() {
 
 	//r.LoadHTMLGlob("templates/**/*")
 
-	//models.ConnectDatabase()
-	//models.DBMigrate()
+	models.ConnectDatabase()
+	models.DBMigrate()
 
 	notes := r.Group("/notes")
 	{
