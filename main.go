@@ -23,13 +23,18 @@ func main() {
 
 	r.LoadHTMLGlob("templates/**/*")
 
+	// инициализируем БД
 	models.ConnectDatabase()
 	models.DBMigrate()
 
+	//инициализируем сессии
 	store := memstore.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("notes", store))
+
+	//прикручиваем проверку аутентифицированного пользователя
 	r.Use(middlewares.AuthenticateUser())
 
+	// прописываем маршруты
 	notes := r.Group("/notes")
 	{
 		notes.GET("/", controllers.NotesIndex)
