@@ -9,11 +9,19 @@ import (
 )
 
 func LoginPage(c *gin.Context) {
-	//TODO NotesShow
+	c.HTML(
+		http.StatusOK,
+		"home/login.html",
+		gin.H{},
+	)
 }
 
 func SignupPage(c *gin.Context) {
-	//TODO NotesShow
+	c.HTML(
+		http.StatusOK,
+		"home/signup.html",
+		gin.H{},
+	)
 }
 
 func Signup(c *gin.Context) {
@@ -26,7 +34,7 @@ func Signup(c *gin.Context) {
 	fmt.Println(available)
 	if !available {
 		c.HTML(
-			http.StatusOK,
+			http.StatusNotAcceptable,
 			"home/signup.html",
 			gin.H{"alert": "Email already exist!"},
 		)
@@ -35,11 +43,26 @@ func Signup(c *gin.Context) {
 	// проверяем, совпадают ли пароль и подтверждение
 	if password != confirmPassword {
 		c.HTML(
-			http.StatusOK,
+			http.StatusNotAcceptable,
 			"home/signup.html",
 			gin.H{"alert": "Password mismatch!"},
 		)
 		return
+	}
+
+	// создаем пользователя
+	user := models.UserCreate(email, password)
+	if user.ID == 0 {
+		c.HTML(
+			http.StatusNotAcceptable,
+			"home/signup.html",
+			gin.H{"alert": "Unable to create user!"},
+		)
+	} else {
+		// создание пользователя прошло успешно, настраиваем сессию
+		helpers.SessionSet(c, user.ID)
+		//редирект в корневую страницу
+		c.Redirect(http.StatusMovedPermanently, "/")
 	}
 
 }
@@ -55,7 +78,7 @@ func Login(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/")
 	} else {
 		c.HTML(
-			http.StatusOK,
+			http.StatusNotAcceptable,
 			"home/login.html",
 			gin.H{"alert": "Email and/or login mismatch!"},
 		)
