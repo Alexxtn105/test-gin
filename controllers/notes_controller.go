@@ -91,6 +91,7 @@ func NotesUpdate(c *gin.Context) {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
+	// TODO - проверить models.NotesUpdate
 	models.NotesUpdate(currentUser, id)
 	c.Redirect(http.StatusSeeOther, "/notes")
 

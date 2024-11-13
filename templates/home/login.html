@@ -1,0 +1,16 @@
+{{ define "home/login.html"}}
+{{ template "layouts/header.html"}}
+<h1>Вход</h1>
+<form action="/login" method="POST">
+    <div class="mb-3">
+        <label for="email" class="form-label">Электронная почта</label>
+        <input type="email" class="form-control" id="email" aria-describedby="Description email" />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="password" aria-describedby="Description password" />
+    </div>
+    <button type="submit" class="btn btn-outline-danger">Войти</button>
+</form>
+{{ template "layouts/footer.html"}}
+{{ end }}

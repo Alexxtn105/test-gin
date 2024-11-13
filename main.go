@@ -18,7 +18,7 @@ func main() {
 
 	r.Static("/vendor", "./static/vendor")
 
-	//r.LoadHTMLGlob("templates/**/*")
+	r.LoadHTMLGlob("templates/**/*")
 
 	models.ConnectDatabase()
 	models.DBMigrate()

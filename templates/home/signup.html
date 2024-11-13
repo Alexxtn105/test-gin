@@ -1,0 +1,20 @@
+{{ define "home/signup.html"}}
+{{ template "layouts/header.html"}}
+<h1>Вход</h1>
+<form action="/signup" method="POST">
+    <div class="mb-3">
+        <label for="email" class="form-label">Электронная почта</label>
+        <input type="email" class="form-control" id="email" aria-describedby="Description email" />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="password" aria-describedby="Description password" />
+    </div>
+    <div class="mb-3">
+        <label for="password_confirm" class="form-label">Подтверждение пароля</label>
+        <input type="password" class="form-control" id="password_confirm" aria-describedby="Description password_confirm" />
+    </div>
+    <button type="submit" class="btn btn-outline-danger">Зарегистрироваться</button>
+</form>
+{{ template "layouts/footer.html"}}
+{{ end }}
