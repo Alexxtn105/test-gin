@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"test-gin/controllers"
 	"test-gin/controllers/helpers"
+	"test-gin/middlewares"
 	"test-gin/models"
 )
 
@@ -22,6 +25,10 @@ func main() {
 
 	models.ConnectDatabase()
 	models.DBMigrate()
+
+	store := memstore.NewStore([]byte("secret"))
+	r.Use(sessions.Sessions("notes", store))
+	r.Use(middlewares.AuthenticateUser())
 
 	notes := r.Group("/notes")
 	{
